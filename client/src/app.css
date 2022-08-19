@@ -78,11 +78,25 @@ button:focus-visible {
 }
 
 .cat-container {
+  background-color: #1a1a1a;
   border: 1px solid black;
-  border-radius: .3rem;
+  color: white;
+  border-radius: 0.3rem;
   background-size: cover;
   background-position: center top;
   background-origin: content-box;
+  box-shadow: 6px 6px 5px black;
+  transition: 0.2s ease all;
+  opacity: .75;
+  user-select: none;
+  cursor: pointer;
+}
+
+.cat-container:hover {
+  scale: 1.2;
+  opacity: 1;
+  z-index: 100;
+  transition: 0.2s ease all;
 }
 
 @media (prefers-color-scheme: light) {
