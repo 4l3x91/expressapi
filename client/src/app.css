@@ -80,6 +80,9 @@ button:focus-visible {
 .cat-container {
   border: 1px solid black;
   border-radius: .3rem;
+  background-size: cover;
+  background-position: center;
+  background-origin: content-box;
 }
 
 @media (prefers-color-scheme: light) {

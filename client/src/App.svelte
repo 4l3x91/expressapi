@@ -1,28 +1,19 @@
 <script lang="ts">
-  import svelteLogo from "./assets/svelte.svg";
+  import catExpressLogo from "./assets/catexpress.png";
   import FetchCats from "./lib/FetchCats.svelte";
-  import Counter from "./lib/Counter.svelte";
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <div
+    style="display: flex; justify-content: center; align-items: center; gap: 1rem;"
+  >
+    <img src={catExpressLogo} class="logo" alt="CatExpress Logo" />
+    <h1 style="align-self: center;">CatExpress</h1>
   </div>
-  <h1>Vite + Svelte</h1>
 
   <div class="container">
     <FetchCats />
   </div>
-
-  <div class="card">
-    <Counter />
-  </div>
-
   <p>
     Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank"
       >SvelteKit</a
@@ -35,7 +26,6 @@
 <style>
   .logo {
     height: 6em;
-    padding: 1.5em;
     will-change: filter;
   }
   .logo:hover {
