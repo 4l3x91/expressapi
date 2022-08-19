@@ -10,6 +10,9 @@ GET http://localhost:3000/api/cats
 ### Get all endpoints
 GET http://localhost:3000/api/cats/endpoints
 
+### Get a random object
+GET http://localhost:3000/api/cats/random
+
 ### Post object
 POST http://localhost:3000/api/cats
 Content-Type: application/json
