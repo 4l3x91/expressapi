@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { cats, dbPath, jsonReader, saveToFile } from "../data/data.handler";
-import { Cat } from "./cat.model";
+import { Cat, catSchema } from "./cat.model";
 import catRouter from "./cat.router";
 
 export const getObject = (req: Request, res: Response, next: NextFunction) => {
@@ -93,7 +93,7 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
     
     cats.push(cat);
     saveToFile(cats);
-    console.log(cats);
+    console.log("Cat posted successfully!");
     res.status(200).json(cat);
 
     next();
@@ -113,4 +113,10 @@ export const getEndPoints = (req: Request, res: Response, next: NextFunction) =>
         path: r.route.path
       };
     }));
+}
+
+export const validateCat = (req: Request, res: Response, next: NextFunction) => {
+  const result = catSchema.validate(req.body);
+  if(result.error) res.status(400).json(result.error.message);
+  else next();
 }
