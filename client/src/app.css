@@ -15,6 +15,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -40,7 +44,6 @@ h1 {
 .card {
   padding: 2em;
 }
-
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -65,6 +68,18 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* CUSTOM CSS */
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cat-container {
+  border: 1px solid black;
+  border-radius: .3rem;
 }
 
 @media (prefers-color-scheme: light) {
