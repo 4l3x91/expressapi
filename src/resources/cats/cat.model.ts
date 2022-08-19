@@ -1,10 +1,7 @@
 import Joi from "joi";
 
 export interface Cat {
-  weight: {
-    imperial: string;
-    metric: string;
-  };
+  weight: string;
   id: string;
   name: string;
   temperament: string;

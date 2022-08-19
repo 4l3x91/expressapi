@@ -22,6 +22,10 @@ async function cleanUpData(data) {
 
   for (let index = 0; index < data.length; index++) {
     let currentObj = data[index];
+
+    if(currentObj.weight) currentObj.weight = currentObj.weight.metric + "kg";
+    else currentObj.weight = "N/A";
+
     if(currentObj.image) currentObj.image = currentObj.image.url;
     else currentObj.image = './src/resources/assets/img/default_cat.png';
 
