@@ -44,39 +44,39 @@ Post a new cat object using the template:
 
 ```json
   "weight": {
-    "imperial": "string";
-    "metric": "string";
-  };
-  "id": "excb";
-  "name": "Example cat breed";
-  "temperament": "Confident, Playful";
-  "origin": "Sweden";
-  "description": "The most awesome cat breed. Ever.";
-  "life_span": "20 - 30";
-  "indoor": 4;
-  "lap": 5;
-  "adaptability": 5;
-  "affection_level": 5;
-  "child_friendly": 4;
-  "cat_friendly": 4;
-  "dog_friendly": 2;
-  "energy_level": 4;
-  "grooming": 2;
-  "health_issues": 1;
-  "intelligence": 5;
-  "shedding_level": 1;
-  "social_needs": 3;
-  "stranger_friendly": 2;
-  "vocalisation": 2;
-  "experimental": 1;
-  "hairless": 1;
-  "natural": 1;
-  "rare": 1;
-  "rex": 1;
-  "suppressed_tail": 1;
-  "short_legs": 0;
-  "hypoallergenic": 0;
-  "image": "string";
+    "imperial": "string",
+    "metric": "string",
+  },
+  "id": "excb",
+  "name": "Example cat breed",
+  "temperament": "Confident, Playful",
+  "origin": "Sweden",
+  "description": "The most awesome cat breed. Ever.",
+  "life_span": "20 - 30",
+  "indoor": 4,
+  "lap": 5,
+  "adaptability": 5,
+  "affection_level": 5,
+  "child_friendly": 4,
+  "cat_friendly": 4,
+  "dog_friendly": 2,
+  "energy_level": 4,
+  "grooming": 2,
+  "health_issues": 1,
+  "intelligence": 5,
+  "shedding_level": 1,
+  "social_needs": 3,
+  "stranger_friendly": 2,
+  "vocalisation": 2,
+  "experimental": 1,
+  "hairless": 1,
+  "natural": 1,
+  "rare": 1,
+  "rex": 1,
+  "suppressed_tail": 1,
+  "short_legs": 0,
+  "hypoallergenic": 0,
+  "image": "string",
 ```
 #
 ### `PUT <host>/api/cats/<id>`
@@ -85,17 +85,13 @@ Modify a specific cat object's property values:
 From
 
 ```json
-...
-  "energy_level": 1;
-...
+  "energy_level": 1
 ```
 
 To
 
 ```json
-...
-  "energy_level": 3;
-...
+  "energy_level": 3
 ```
 #
 ## Krav för godkänt
