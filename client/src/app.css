@@ -81,7 +81,7 @@ button:focus-visible {
   border: 1px solid black;
   border-radius: .3rem;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-origin: content-box;
 }
 
