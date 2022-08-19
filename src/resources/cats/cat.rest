@@ -2,13 +2,13 @@
 GET http://localhost:3000/
 
 ### Get object by ID
-GET http://localhost:3000/api/<id>
+GET http://localhost:3000/api/cats/<id>
 
 ### Get all objects
-GET http://localhost:3000/api
+GET http://localhost:3000/api/cats
 
 ### Post object
-POST http://localhost:3000/api
+POST http://localhost:3000/api/cats
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### Update object
-PUT http://localhost:3000/api/<id>
+PUT http://localhost:3000/api/cats/<id>
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### Delete object by ID
-DELETE http://localhost:3000/api/<id>
+DELETE http://localhost:3000/api/cats/<id>
 
 ### Delete all objects
-DELETE http://localhost:3000/api
+DELETE http://localhost:3000/api/cats
