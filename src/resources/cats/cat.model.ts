@@ -32,8 +32,8 @@ export interface Cat {
   rare: number;
   rex: number;
   suppressed_tail: number;
-  short_legs: boolean;
-  hypoallergenic: string;
+  short_legs: number;
+  hypoallergenic: number;
   image: string;
 }
 
