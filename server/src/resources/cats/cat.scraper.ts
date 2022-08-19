@@ -1,3 +1,4 @@
+import { port, url } from "../../server";
 import { saveToFile } from "../data/data.handler";
 
 const fs = require("fs");
@@ -29,7 +30,7 @@ async function cleanUpData(data) {
     else currentObj.weight = "N/A";
 
     if(currentObj.image) currentObj.image = currentObj.image.url;
-    else currentObj.image = './src/resources/assets/img/default_cat.png';
+    else currentObj.image = `${url}${port}/img/default_cat.png`;
 
     for (let i = 0; i < deletePropList.length; i++) {
       delete currentObj[deletePropList[i]];
