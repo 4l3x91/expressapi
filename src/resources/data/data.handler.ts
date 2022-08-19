@@ -4,15 +4,12 @@ import { initCatAPI } from "../cats/cat.scraper";
 
 export let cats: Cat[] = [];
 
-const dbPath = "src/resources/data/catsDB.json";
-
-// Move this
-jsonReader(dbPath);
+export const dbPath = "src/resources/data/catsDB.json";
 
 // Also move this?
 if (!fs.existsSync(dbPath) || fs.readFileSync(dbPath).length === 0) initCatAPI();
 
-export function jsonReader(filePath: string) {
+export async function jsonReader(filePath: string) {
 
     fs.readFile(filePath, 'utf-8', (err, fileData) => {
     if(err) err;
@@ -29,4 +26,9 @@ export function jsonReader(filePath: string) {
 });
 };
 
-// TODO: Move saveFile() here
+export async function saveToFile(data) {
+    await fs.writeFile("src/resources/data/catsDB.json", JSON.stringify(data, null, "\t"), (err) => {
+      if (err) console.log(err);
+      else console.log("Save done.")
+    });
+  }

@@ -1,3 +1,5 @@
+import { saveToFile } from "../data/data.handler";
+
 const fs = require("fs");
 
 export async function initCatAPI() {
@@ -35,11 +37,4 @@ async function cleanUpData(data) {
     
     console.log(`${currentObj.name} has been cleaned!`);
   }
-}
-
-async function saveToFile(data) {
-  await fs.writeFile("src/resources/data/catsDB.json", JSON.stringify(data, null, "\t"), (err) => {
-    if (err) console.log(err);
-    else console.log("Save done.")
-  });
 }

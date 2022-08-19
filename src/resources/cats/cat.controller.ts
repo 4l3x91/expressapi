@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { cats } from "../data/data.handler";
+import { cats, dbPath, jsonReader, saveToFile } from "../data/data.handler";
+import { Cat } from "./cat.model";
 import catRouter from "./cat.router";
 
 export const getObject = (req: Request, res: Response, next: NextFunction) => {
@@ -11,6 +12,9 @@ export const getObject = (req: Request, res: Response, next: NextFunction) => {
 
   next();
 };
+
+// Only works if it's here(?)
+jsonReader(dbPath);
 
 export const getAllObjects = (
   req: Request,
@@ -53,8 +57,47 @@ export const validateObject = (
 };
 
 export const postObject = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: Post object
-};
+    let cat: Cat = {
+      weight: req.body.weight + "kg",
+      id: req.body.name[0].toLowerCase() + "-test",
+      name: req.body.name,
+      temperament: req.body.temperament,
+      origin: req.body.origin,
+      description: req.body.description,
+      life_span: req.body.life_span,
+      indoor: req.body.indoor,
+      lap: req.body.lap,
+      adaptability: req.body.adaptability,
+      affection_level: req.body.affection_level,
+      child_friendly: req.body.child_friendly,
+      cat_friendly: req.body.cat_friendly,
+      dog_friendly: req.body.dog_friendly,
+      energy_level: req.body.energy_level,
+      grooming: req.body.grooming,
+      health_issues: req.body.health_issues,
+      intelligence: req.body.intelligence,
+      shedding_level: req.body.shedding_level,
+      social_needs: req.body.social_needs,
+      stranger_friendly: req.body.stranger_friendly,
+      vocalisation: req.body.vocalisation,
+      experimental: req.body.experimental,
+      hairless: req.body.hairless,
+      natural: req.body.natural,
+      rare: req.body.rare,
+      rex: req.body.rex,
+      suppressed_tail: req.body.suppressed_tail,
+      short_legs: req.body.short_legs,
+      hypoallergenic: req.body.hypoallergenic,
+      image: req.body.image
+    };
+    
+    cats.push(cat);
+    saveToFile(cats);
+    console.log(cats);
+    res.status(200).json(cat);
+
+    next();
+  };
 
 export const editObject = (req: Request, res: Response, next: NextFunction) => {
   // TODO: Put object
