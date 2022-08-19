@@ -1,6 +1,7 @@
 import express from "express";
 
-import { getAllObjects, getObject, postObject, deleteObject, deleteAllObjects, logger, editObject } from "./resources/cats/cat.controller";
+import { deleteAllObjects, deleteObject, editObject, getAllObjects, getObject, postObject } from "./resources/cats/cat.controller";
+import { logger } from "./resources/middlewares";
 
 const app = express();
 const port = 3000;

@@ -58,8 +58,3 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
 export const editObject = (req: Request, res: Response, next: NextFunction) => {
   // TODO: Put object
 };
-
-export const logger = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.method, req.path);
-  next();
-};
