@@ -5,6 +5,7 @@
 ### Custom
 dist
 node_modules
+catsDB.json
 
 ### VisualStudioCode ###
 .vscode/*
