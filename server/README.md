@@ -4,6 +4,8 @@
 
 <br>Assuming you've got `npm`, `typescript` and `Node` installed on your machine:</br>
 
+# Server
+
 ## Set up
 
 ```
@@ -26,20 +28,35 @@ npm run dev
 ```
 
 By default <i>`CatExpress`</i> runs on `localhost` and port `3000`
+
 #
+
 ### `GET <host>/api/cats`
+
 Returns all entries in `catsDB.json`
+
 #
+
 ### `GET <host>/api/cats/id/abys`
+
 Returns the cat object which has the id `abys`
+
 #
+
 ### `GET <host>/api/cats/random`
+
 Returns a random cat breed entry
+
 #
+
 ### `GET <host>/api/cats/endpoints`
+
 Returns the endpoints, and their descriptions.
+
 #
+
 ### `POST <host>/api/cats`
+
 Post a new cat object using the template:
 
 ```json
@@ -78,8 +95,11 @@ Post a new cat object using the template:
   "hypoallergenic": 0,
   "image": "string",
 ```
+
 #
+
 ### `PUT <host>/api/cats/<id>`
+
 Modify a specific cat object's property values:
 
 From
@@ -94,7 +114,13 @@ To
   "energy_level": 3
 ```
 #
+# Client
+## <i>TODO</i>
+
+#
+
 ## Krav för godkänt
+
 - [x] Projektet innehåller minst 4 st. endpoints (GET, POST, PUT & DELETE för en resurs)
 - [x] Samtliga endpoints skall kunna nås via en REST Client fil (.rest|.http)
 - [ ] Datan som API:et hanterar sparas lokalt i serverfilen
