@@ -23,7 +23,7 @@ async function cleanUpData(data) {
   for (let index = 0; index < data.length; index++) {
     let currentObj = data[index];
     if(currentObj.image) currentObj.image = currentObj.image.url;
-    else currentObj.image = './src/assets/img/default_cat.png';
+    else currentObj.image = './src/resources/assets/img/default_cat.png';
 
     for (let i = 0; i < deletePropList.length; i++) {
       delete currentObj[deletePropList[i]];
