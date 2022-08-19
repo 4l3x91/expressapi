@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { cats } from "../data/data.handler";
+import catRouter from "./cat.router";
 
 export const getObject = (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
@@ -58,3 +59,15 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
 export const editObject = (req: Request, res: Response, next: NextFunction) => {
   // TODO: Put object
 };
+
+export const getEndPoints = (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).json(
+    catRouter.stack
+    .filter(r => r.route)
+    .map(r => {
+      return {
+        method: Object.keys(r.route.methods)[0].toUpperCase(),
+        path: r.route.path
+      };
+    }));
+}

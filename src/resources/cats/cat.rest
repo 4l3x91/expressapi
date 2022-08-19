@@ -7,12 +7,48 @@ GET http://localhost:3000/api/cats/id/<id>
 ### Get all objects
 GET http://localhost:3000/api/cats
 
+### Get all endpoints
+GET http://localhost:3000/api/cats/endpoints
+
 ### Post object
 POST http://localhost:3000/api/cats
 Content-Type: application/json
 
 {
-    TODO: Example post
+  "weight": {
+    "imperial": "string";
+    "metric": "string";
+  };
+  "id": "string";
+  "name": "Test";
+  "temperament": "string";
+  "origin": "string";
+  "description": "string";
+  "life_span": "string";
+  "indoor": 1;
+  "lap": 1;
+  "adaptability": 1;
+  "affection_level": 1;
+  "child_friendly": 1;
+  "cat_friendly": 1;
+  "dog_friendly": 1;
+  "energy_level": 1;
+  "grooming": 1;
+  "health_issues": 1;
+  "intelligence": 1;
+  "shedding_level": 1;
+  "social_needs": 1;
+  "stranger_friendly": 1;
+  "vocalisation": 1;
+  "experimental": 1;
+  "hairless": 1;
+  "natural": 1;
+  "rare": 1;
+  "rex": 1;
+  "suppressed_tail": 1;
+  "short_legs": 0;
+  "hypoallergenic": "string";
+  "image": "string";
 }
 
 ### Update object
