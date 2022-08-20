@@ -1,8 +1,6 @@
 import { port, url } from "../../server";
 import { saveToFile } from "../data/data.handler";
 
-const fs = require("fs");
-
 export async function initCatAPI() {
   let response = await fetch("https://api.thecatapi.com/v1/breeds");
   let dataResult = await response.json();
