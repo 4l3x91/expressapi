@@ -17,7 +17,67 @@
     4: 80,
     5: 100,
   };
+
+  async function postKitty() {
+    console.log(specificCat.name);
+    console.log(specificCat.id);
+    await fetch(`http://localhost:3000/api/cats`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(specificCat),
+    })
+      .then((result) => {
+        console.log("Completed with result:", result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  async function putKitty() {
+    console.log(specificCat.name);
+    console.log(specificCat.id);
+    await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(specificCat),
+    })
+      .then((result) => {
+        console.log("Completed with result:", result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  async function delKitty() {
+    console.log(specificCat.name);
+    console.log(specificCat.id);
+    await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(specificCat),
+    })
+      .then((result) => {
+        console.log("Completed with result:", result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 </script>
+
+<button on:click={postKitty}> Post this kitty </button>
+
+<button on:click={putKitty}> Put this kitty </button>
+
+<button on:click={delKitty}> Delete this kitty </button>
 
 <!-- <div class="img-container"><img src={specificCat.image} width="100%;" alt="" /></div> -->
 <div class="modal-cat-container">
