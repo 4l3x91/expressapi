@@ -5,7 +5,7 @@ const catRouter = express.Router();
 catRouter.get("/id/:id", getObject);
 catRouter.get("/", getAllObjects);
 catRouter.post("/", postObject);
-catRouter.put("/", editObject);
+catRouter.put("/:id", editObject);
 catRouter.delete("/id/:id", deleteObject);
 catRouter.delete("/", deleteAllObjects);
 catRouter.get("/random", getRandomObject)
