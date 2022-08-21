@@ -108,30 +108,6 @@ button:focus-visible {
   gap: 1rem;
 }
 
-.cat-container {
-  background-color: #1a1a1a;
-  color: white;
-  border-radius: 0.3rem;
-  background-size: cover;
-  background-position: center top;
-  background-origin: content-box;
-  box-shadow: 6px 6px 5px black;
-  transition: 0.2s ease all;
-  opacity: .75;
-  user-select: none;
-  cursor: pointer;
-  z-index: 1;
-  position: relative;
-}
-
-.cat-container:hover {
-  scale: 1.2;
-  opacity: 1;
-  z-index: 2;
-  box-shadow: 1px 1px 10px black;
-  transition: 0.2s ease all;
-}
-
 .cat-modal {
   z-index: 100;
 }

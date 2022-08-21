@@ -17,13 +17,44 @@
     <div
       on:click={() => open(Popup, { specificCat: item })}
       class="cat-container"
-      style="background-image: url({item.image}); height: 200px;"
+      style="background-image: url({item.image});"
     >
-      <div
-        style="text-align: left; padding-left: 5px; font-size: 20px; text-shadow: 1px 1px #242424;"
-      >
+      <div class="cat-container-name">
         {item.name}
       </div>
     </div>
   {/each}
 {/await}
+
+<style>
+  .cat-container {
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 0.3rem;
+    background-size: cover;
+    background-position: center top;
+    background-origin: content-box;
+    box-shadow: 6px 6px 5px black;
+    transition: 0.2s ease all;
+    opacity: 0.75;
+    user-select: none;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+    height: 200px;
+  }
+
+  .cat-container:hover {
+    scale: 1.2;
+    opacity: 1;
+    z-index: 2;
+    box-shadow: 1px 1px 10px black;
+    transition: 0.2s ease all;
+  }
+  .cat-container-name {
+    text-align: left;
+    padding-left: 5px;
+    font-size: 20px;
+    text-shadow: 1px 1px #242424;
+  }
+</style>
