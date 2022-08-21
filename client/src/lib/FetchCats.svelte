@@ -5,6 +5,9 @@
     if (data) console.log("Data fetched successfully!");
     return data;
   }
+  import { getContext } from "svelte";
+  import Popup from "./Popup.svelte";
+  const { open } = getContext("simple-modal");
 </script>
 
 {#await fetchData()}
@@ -12,6 +15,7 @@
 {:then items}
   {#each items as item}
     <div
+      on:click={() => open(Popup, { specificCat: item })}
       class="cat-container"
       style="background-image: url({item.image}); height: 200px;"
     >
