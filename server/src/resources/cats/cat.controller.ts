@@ -108,7 +108,15 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const editObject = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: Put object
+    const id = req.params.id;
+    const cat = cats.find((x) => x.id === id);
+    if (cat) {
+      const catIndex = cats.indexOf(cat);
+      cats[catIndex] = req.body;
+      res.status(200).json(cats[catIndex]);
+    } else res.status(204).json({ message: "Cat not found." });
+  
+    next();
 };
 
 export const getEndPoints = (
