@@ -5,7 +5,7 @@
   import Header from "./lib/Header.svelte";
 </script>
 
-<Header />
+<Modal><Header /></Modal>
 <main>
   <div class="container">
     <Modal><FetchCats /></Modal>
