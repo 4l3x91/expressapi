@@ -17,6 +17,7 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-width: none !important;
 }
 
 a {
@@ -84,6 +85,18 @@ button:focus-visible {
   will-change: filter;
 }
 
+/* modal changes */
+.close {
+  top: 0.5rem !important;
+  right: 0.5rem !important;
+}
+
+.window {
+  background: #29292b !important;
+  color: white !important;
+}
+/* modal changes */
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -107,15 +120,22 @@ button:focus-visible {
   opacity: .75;
   user-select: none;
   cursor: pointer;
+  z-index: 1;
+  position: relative;
 }
 
 .cat-container:hover {
   scale: 1.2;
   opacity: 1;
-  z-index: 100;
+  z-index: 2;
   box-shadow: 1px 1px 10px black;
   transition: 0.2s ease all;
 }
+
+.cat-modal {
+  z-index: 100;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
