@@ -1,6 +1,9 @@
 <script lang="ts">
   export let specificCat;
   console.log(specificCat);
+  import { fly } from 'svelte/transition';
+	let visible = true;
+
   let countryFlag;
   function checkFlag() {
     if (specificCat.origin === "Russia") countryFlag = "rus";
@@ -70,16 +73,47 @@
         console.error(err);
       });
   }
+  import { getContext } from "svelte";
+  let onCancel = () => {};
+
+  const { close } = getContext("simple-modal");
+
+  function _onCancel() {
+    onCancel();
+    close();
+  }
+  async function _onDelete() {
+    await delKitty();
+    delFromUI();
+    console.log(`Cat breed ${specificCat.name} deleted.`);
+    console.log("Deleting object from UI.");
+    _onCancel();
+    console.log("Closing modal.");
+  }
+
+  function delFromUI() {
+    // relaod parent component(?)
+  }
+
 </script>
 
+<label>
+	<input type="checkbox" bind:checked={visible}>
+	visible
+</label>
+
+<!-- move to addPopup -->
 <button on:click={postKitty}> Post this kitty </button>
 
+<!-- move to submit -->
 <button on:click={putKitty}> Put this kitty </button>
 
-<button on:click={delKitty}> Delete this kitty </button>
+<!-- re-render  -->
+<button on:click={_onDelete}> Delete this kitty </button>
 
-<!-- <div class="img-container"><img src={specificCat.image} width="100%;" alt="" /></div> -->
-<div class="modal-cat-container">
+{#if visible}
+<div in:fly={{ y: 300, duration: 500, delay: 150 }}
+out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
   <div class="modal-cat-container" style="display: flex;">
     <div class="modal-cat-container-left" style="width: 100%">
       <div style="padding: 10px; text-align: left;">
@@ -273,33 +307,26 @@
   </div>
 </div>
 
-<!-- <div>{specificCat.temperament}</div> -->
-<!-- <div>{specificCat.description}</div> -->
+{:else}
+<div in:fly={{ y: 300, duration: 500, delay: 150 }}
+out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
+<h1>Form</h1>
+<form class="content" on:submit|preventDefault={(e) => 
+{
+  console.log(specificCat);
+  visible = true;
+  }}>
+  <div>Name</div>
+  <input type="text" bind:value={specificCat.name} />
+  <div>Description</div>
+  <input type="text" bind:value={specificCat.description} />
+	<button>
+		Submit
+	</button>
+</form>
+</div>
+{/if}
 
-<!-- 
-<div>{specificCat.indoor}</div> 0/1
-<div>{specificCat.lap}</div>
-<div>{specificCat.adaptability}</div>
-<div>{specificCat.affection_level}</div>
-<div>{specificCat.child_friendly}</div>
-<div>{specificCat.dog_friendly}</div>
-<div>{specificCat.energy_level}</div>
-<div>{specificCat.grooming}</div>
-<div>{specificCat.health_issues}</div>
-<div>{specificCat.intelligence}</div>
-<div>{specificCat.shedding_level}</div>
-<div>{specificCat.social_needs}</div>
-<div>{specificCat.bidability}</div>
-<div>{specificCat.stranger_friendly}</div>
-<div>{specificCat.vocalisation}</div>
-<div>{specificCat.experimental}</div> 0/1
-<div>{specificCat.hairless}</div> 0/1
-<div>{specificCat.natural}</div> 0/1
-<div>{specificCat.rare}</div> 0/1
-<div>{specificCat.rex}</div> 0/1
-<div>{specificCat.suppressed_tail}</div> 0/1
-<div>{specificCat.short_legs}</div> 0/1
-<div>{specificCat.hypoallergenic}</div> 0/1-->
 <style>
   .breed-trait-container {
     text-align: left;
