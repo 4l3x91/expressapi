@@ -104,10 +104,7 @@
         </div>
 
         {#each traitsArray as item}
-          <div
-            class="trait-container"
-            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;"
-          >
+          <div class="trait-container">
             <div style="text-align: left;">
               <div>
                 {item.name}
@@ -122,20 +119,10 @@
                 <span style="font-size: 1.5rem">{grabRandomCatMoji()}</span>
               </Slider>
             </div>
-            <div style="align-self: center; display: flex;">
-              <input
-                type="number"
-                style="border: 1px solid white;
-                  padding: 10px;
-                  text-align: center;
-                  border-radius: 0.3rem;
-                  font-size: 24px;
-                  width: 60px;"
-                bind:value={item.value[0]}
-                min="0"
-                max="4"
-                step="1"
-              />
+            <div class="trait-value-container" style="display:flex;">
+              <div class="trait-value-box">
+                {item.value[0] + 1}
+              </div>
             </div>
           </div>
         {/each}
@@ -146,15 +133,22 @@
 </div>
 
 <style>
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .trait-value-box {
+    align-self: center;
+    display: flex;
+    padding: 10px 20px;
+    justify-content: center;
+    border-radius: 0.3rem;
+    font-size: 24px;
+    width: 30px;
+    border: 1px solid #0c0c0c;
+    box-shadow: 1px 1px black;
+    background: #2b2a33;
   }
 
-  /* Firefox */
-  input[type="number"] {
-    -moz-appearance: textfield;
+  .trait-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 </style>
