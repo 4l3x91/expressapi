@@ -89,12 +89,12 @@
     console.log("Deleting object from UI.");
     _onCancel();
     console.log("Closing modal.");
+    alert("Breed has been deleted!")
   }
 
   function delFromUI() {
     // relaod parent component(?)
   }
-
 </script>
 
 <label>
@@ -317,6 +317,7 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
   visible = true;
   }}>
   <div>Name</div>
+  
   <input type="text" bind:value={specificCat.name} />
   <div>Description</div>
   <input type="text" bind:value={specificCat.description} />
