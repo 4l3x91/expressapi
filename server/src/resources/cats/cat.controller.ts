@@ -50,7 +50,10 @@ export const deleteObject = (
   const id = req.params.id;
   var cat = cats.find((x) => x.id === id);
 
-  if (cat) res.status(200).json(cats.splice(cats.indexOf(cat), 1));
+  if (cat) {
+    res.status(200).json(cats.splice(cats.indexOf(cat), 1));
+    saveToFile(cats);
+  }
   else res.status(204).json({ message: "Not found" });
 
   next();
@@ -112,8 +115,9 @@ export const editObject = (req: Request, res: Response, next: NextFunction) => {
     const cat = cats.find((x) => x.id === id);
     if (cat) {
       const catIndex = cats.indexOf(cat);
-      cats[catIndex] = req.body;
+      cats[catIndex] = {id, ...req.body};
       res.status(200).json(cats[catIndex]);
+      saveToFile(cats);
     } else res.status(204).json({ message: "Cat not found." });
   
     next();
