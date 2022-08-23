@@ -10,9 +10,14 @@
   const { open } = getContext("simple-modal");
 </script>
 
-{#await fetchData()}
-  <p>Loading kitties...</p>
-{:then items}
+<div class="cat-container" style="background-image: url('/src/assets/randomCat.jpg');
+background-size: cover;
+background-repeat: no-repeat;">
+<div class="cat-container-name">
+  Test
+</div>
+</div>
+{#await fetchData() then items}
   {#each items as item}
     <div
       on:click={() => open(Popup, { specificCat: item })}
@@ -25,7 +30,6 @@
     </div>
   {/each}
 {/await}
-
 <style>
   .cat-container {
     background-color: #1a1a1a;
