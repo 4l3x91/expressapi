@@ -199,7 +199,11 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
           style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
         >
           <div class="weight-label" style="color: rgb(198, 198, 198);font-size: 14px;">WEIGHT</div>
-          <div>{specificCat.weight}</div>
+          <div>{specificCat.weight}
+          {#if specificCat.weight != "N/A"}
+          <span> kg</span>
+          {/if}
+          </div>
         </div>
         <div
           style="display: flex;justify-content: space-between;text-align: right;border-top: 1px solid #b5b5b5;border-bottom: 1px solid #b5b5b5;padding: 10px;"
