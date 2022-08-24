@@ -2,6 +2,10 @@
   import Slider from "@bulatdashiev/svelte-slider";
   let breedName;
   let breedOrigin;
+  let breedWeight;
+  let breedDescription;
+  let breedLifetime;
+  let breedImage;
 
   function grabRandomCatMoji() {
     let catArray = ["🐱", "😻", "😽", "😿", "😸", "😾", "🙀", "😹", "😼", "😺"];
@@ -21,11 +25,11 @@
 
   function setValues() {
     const cat = {
-      weight: "15 - 20",
+      weight: breedWeight,
       name: breedName,
       origin: breedOrigin,
-      description: "The awesome cat is an awesome cat",
-      life_span: "20 - 30",
+      description: breedDescription,
+      life_span: breedLifetime,
       adaptability: traitsArray[3].value[0] + 1,
       affection_level: traitsArray[5].value[0] + 1,
       energy_level: traitsArray[2].value[0] + 1,
@@ -33,8 +37,7 @@
       health_issues: traitsArray[1].value[0] + 1,
       intelligence: traitsArray[0].value[0] + 1,
       social_needs: traitsArray[0].value[0] + 1,
-      image:
-        "https://seniordeal.se/app/uploads/articleimages/katter-383607-unsplash.jpg",
+      image: breedImage,
     };
     return cat;
   }
