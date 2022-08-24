@@ -10,81 +10,44 @@ GET http://localhost:3000/api/cats
 ### Get all endpoints
 GET http://localhost:3000/api/cats/endpoints
 
-### Get a random object
-GET http://localhost:3000/api/cats/random
-
 ### Post object
 POST http://localhost:3000/api/cats
 Content-Type: application/json
 
-{
-  "weight": "10 - 15",
-  "name": "AwesomeCat",
-  "temperament": "string",
-  "origin": "string",
-  "description": "string",
-  "life_span": "string",
-  "indoor": 1,
-  "lap": 1,
-  "adaptability": 1,
-  "affection_level": 1,
-  "child_friendly": 1,
-  "cat_friendly": 1,
-  "dog_friendly": 1,
-  "energy_level": 1,
-  "grooming": 1,
-  "health_issues": 1,
-  "intelligence": 1,
-  "shedding_level": 1,
-  "social_needs": 1,
-  "stranger_friendly": 1,
-  "vocalisation": 1,
-  "experimental": 1,
-  "hairless": 1,
-  "natural": 1,
-  "rare": 1,
-  "rex": 1,
-  "suppressed_tail": 1,
-  "short_legs": 0,
-  "hypoallergenic": 1,
-  "image": "string"
-}
+  {
+    "weight": "3 - 5",
+    "id": "abys",
+    "name": "Abyssinian",
+    "origin": "Egypt",
+    "description": "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
+    "life_span": "14 - 15",
+    "adaptability": 5,
+    "affection_level": 5,
+    "energy_level": 5,
+    "grooming": 1,
+    "health_issues": 2,
+    "intelligence": 5,
+    "image": "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"
+  }
 
 ### Update object
-PUT http://localhost:3000/api/cats/<id>
+PUT http://localhost:3000/api/cats/abys
 Content-Type: application/json
 
-{
-  "weight": "14 - 17kg",
-  "id": "norw",
-  "name": "Norwegian Forest Cat",
-  "temperament": "Sweet, Active, Intelligent, Social, Playful, Lively, Curious",
-  "origin": "Norway",
-  "description": "The Norwegian Forest Cat is a sweet, loving cat. She appreciates praise and loves to interact with her parent. She makes a loving companion and bonds with her parents once she accepts them for her own. She is still a hunter at heart. She loves to chase toys as if they are real. She is territorial and patrols several times each day to make certain that all is fine.",
-  "life_span": "12 - 16",
-  "indoor": 0,
-  "adaptability": 5,
-  "affection_level": 5,
-  "child_friendly": 4,
-  "dog_friendly": 5,
-  "energy_level": 3,
-  "grooming": 2,
-  "health_issues": 3,
-  "intelligence": 4,
-  "shedding_level": 3,
-  "social_needs": 5,
-  "stranger_friendly": 5,
-  "vocalisation": 1,
-  "experimental": 0,
-  "hairless": 0,
-  "natural": 1,
-  "rare": 0,
-  "rex": 0,
-  "suppressed_tail": 0,
-  "short_legs": 0,
-  "hypoallergenic": 0,
-  "image": "https://cdn2.thecatapi.com/images/06dgGmEOV.jpg"
-}
+  {
+    "weight": "3 - 5",
+    "name": "Abyssinian",
+    "origin": "Egypt",
+    "description": "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
+    "life_span": "25 - 30",
+    "adaptability": 5,
+    "affection_level": 5,
+    "energy_level": 5,
+    "grooming": 1,
+    "health_issues": 2,
+    "intelligence": 5,
+    "image": "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"
+  }
 
 ### Delete object by ID
 DELETE http://localhost:3000/api/cats/id/<id>

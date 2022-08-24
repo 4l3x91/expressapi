@@ -18,13 +18,31 @@ async function cleanUpData(data) {
     "cfa_url",
     "reference_image_id",
     "wikipedia_url",
-    "alt_names"
+    "alt_names",
+    "indoor",
+    "child_friendly",
+    "dog_friendly",
+    "shedding_level",
+    "social_needs",
+    "stranger_friendly",
+    "vocalisation",
+    "experimental",
+    "hairless",
+    "natural",
+    "rare",
+    "rex",
+    "suppressed_tail",
+    "short_legs",
+    "temperament",
+    "lap",
+    "hypoallergenic"
   ];
+
 
   for (let index = 0; index < data.length; index++) {
     let currentObj = data[index];
 
-    if(currentObj.weight) currentObj.weight = currentObj.weight.metric + "kg";
+    if(currentObj.weight) currentObj.weight = currentObj.weight.metric;
     else currentObj.weight = "N/A";
 
     if(currentObj.image) currentObj.image = currentObj.image.url;

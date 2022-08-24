@@ -2,7 +2,6 @@
   import { getContext } from "svelte";
   import { fly } from 'svelte/transition';
 
-  let visible = true;
   let countryFlag;
   let onCancel = () => {};
 
@@ -16,7 +15,6 @@
   };
 
   export let specificCat;
-  export let testArr;
 
   async function getSpecificCatById() {
     const modalCat = await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`);
@@ -32,29 +30,9 @@
     return countryFlag;
   }
 
-
-  async function postKitty() {
-    console.log(specificCat.name);
-    console.log(specificCat.id);
-    await fetch(`http://localhost:3000/api/cats`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(specificCat),
-    })
-      .then((result) => {
-        console.log("Completed with result:", result);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
   async function putKitty() {
-    console.log(specificCat.name);
-    console.log(specificCat.id);
-    await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`, {
+
+    await fetch(`http://localhost:3000/api/cats/${specificCat.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -95,21 +73,17 @@
   }
 
   getSpecificCatById();
+  let visible = true;
+  function setVisible() {
+    if(visible) visible = false;
+    else visible = true;
+  }
 </script>
 
-<label>
-	<input type="checkbox" bind:checked={visible}>
-	visible
-</label>
-
-<!-- move to addPopup -->
-<button on:click={postKitty}> Post this kitty </button>
-
-<!-- move to submit -->
-<button on:click={putKitty}> Put this kitty </button>
-
-<!-- re-render  -->
-<button on:click={_onDelete}> Delete this kitty </button>
+<div style="display: flex;">
+  <div class="icons" on:click={setVisible}>📝</div>
+  <div class="icons" on:click={_onDelete}>🗑️</div>
+</div>
 
 {#if visible}
 <div in:fly={{ y: 300, duration: 500, delay: 150 }}
@@ -123,30 +97,14 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
         >
           {specificCat.name}
         </div>
-        <div
-          style="text-align: left;
-          font-size: 14px;
-          font-family: Arial;
-          font-style: italic;
-          width: 80%;"
-        >
-          "{specificCat.temperament}"
-        </div>
         <img
           src="https://countryflagsapi.com/png/{checkFlag()}"
           alt=""
-          style="width: 120px;margin-top: 10px;"
+          style="height: 40px;margin-top: 10px;"
         />
       </div>
       <div class="breed-characteristics">
-        <div
-          style="padding: 10px;
-        font-size: 24px;
-        text-align: left;"
-        >
-          Characteristics
-        </div>
-        <!-- move to list and loop to create this part -->
+        <div class="breed-label">Characteristics</div>
         <div class="breed-trait-container">
           <div>Intelligence</div>
           <div class="progress-bar-wrapper">
@@ -176,39 +134,6 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
               <span
                 class="progress-bar-fill"
                 style="width: {mapCatStats[specificCat.energy_level]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Child Friendly</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.child_friendly]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Dog Friendly</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.dog_friendly]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Cat Friendly</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.cat_friendly]}%;"
               />
             </div>
           </div>
@@ -246,7 +171,6 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
             </div>
           </div>
         </div>
-        <!-- move to list and loop to create this part -->
       </div>
     </div>
     <div class="modal-cat-container-right" style="width: 100%">
@@ -268,60 +192,48 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
   max-height: 400px;"
       />
       <div class="breed-details">
-        <div style="padding: 10px;font-size: 24px;text-align: left;">
+        <div class="breed-label">
           Breed Details
         </div>
         <div
           style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
         >
-          <div style="color: rgb(198, 198, 198);font-size: 14px;">WEIGHT</div>
+          <div class="weight-label" style="color: rgb(198, 198, 198);font-size: 14px;">WEIGHT</div>
           <div>{specificCat.weight}</div>
         </div>
         <div
           style="display: flex;justify-content: space-between;text-align: right;border-top: 1px solid #b5b5b5;border-bottom: 1px solid #b5b5b5;padding: 10px;"
         >
-          <div style="font-size: 14px;color: rgb(198, 198, 198);">LIFESPAN</div>
+          <div class="lifespan-label" style="font-size: 14px;color: rgb(198, 198, 198);">LIFESPAN</div>
           <div>{specificCat.life_span} years</div>
         </div>
         <div
           style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
         >
-          <div style="color: rgb(198, 198, 198);font-size: 14px;">ORIGIN</div>
+          <div class="origin-label" style="color: rgb(198, 198, 198);font-size: 14px;">ORIGIN</div>
           <div>{specificCat.origin}</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div>
-    <div
-      style="padding: 10px;
-    font-size: 24px;
-    text-align: left;"
-    >
-      About
-    </div>
-    <div style="text-align: left; padding: 10px;">
+  <div style="height: 70px;"></div>
+    <div class="breed-label">About</div>
+    <div class="" style="text-align: left; padding: 10px;">
       {specificCat.description}
     </div>
   </div>
-</div>
-
 {:else}
 <div in:fly={{ y: 300, duration: 500, delay: 150 }}
 out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
 <h1>Form</h1>
-<form class="content" on:submit|preventDefault={(e) => 
-{
-  console.log(specificCat);
-  visible = true;
-  }}>
+<form class="content" on:submit|preventDefault={() => { visible = true; }}>
   <div>Name</div>
   
   <input type="text" bind:value={specificCat.name} />
   <div>Description</div>
   <input type="text" bind:value={specificCat.description} />
-	<button>
+	<button on:click={putKitty}>
 		Submit
 	</button>
 </form>
@@ -335,12 +247,16 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
     padding-bottom: 0px;
   }
 
+  .breed-label {
+    padding: 10px;
+    font-size: 24px;
+    text-align: left;
+  }
+
   .progress-bar {
     width: 100%;
     background-color: #e0e0e0;
-    /* padding: 3px; */
     border-radius: 0.3rem;
-    /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); */
   }
 
   .progress-bar-fill {
@@ -350,5 +266,11 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
     border-radius: 0.3rem;
 
     transition: width 500ms ease-in-out;
+  }
+
+  .icons {
+    font-size: 32px;
+    line-height: 32px;
+    cursor: pointer;
   }
 </style>

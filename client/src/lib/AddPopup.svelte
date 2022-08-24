@@ -14,9 +14,6 @@
     { name: "Intelligence", propName: "intelligence", value: [1, 5] },
     { name: "Health Issues", propName: "health_issues", value: [1, 5] },
     { name: "Energy Level", propName: "energy_level", value: [1, 5] },
-    { name: "Child Friendly", propName: "child_friendly", value: [1, 5] },
-    { name: "Dog Friendly", propName: "dog_friendly", value: [1, 5] },
-    { name: "Cat Friendly", propName: "cat_friendly", value: [1, 5] },
     { name: "Adaptability", propName: "adaptability", value: [1, 5] },
     { name: "Grooming", propName: "grooming", value: [1, 5] },
     { name: "Affection", propName: "affection_level", value: [1, 5] },
@@ -26,33 +23,16 @@
     const cat = {
       weight: "15 - 20",
       name: breedName,
-      temperament: "string",
       origin: breedOrigin,
       description: "The awesome cat is an awesome cat",
       life_span: "20 - 30",
-      indoor: 1,
-      lap: 0,
-      adaptability: traitsArray[6].value[0] + 1,
-      affection_level: traitsArray[8].value[0] + 1,
-      child_friendly: traitsArray[3].value[0] + 1,
-      cat_friendly: traitsArray[5].value[0] + 1,
-      dog_friendly: traitsArray[4].value[0] + 1,
+      adaptability: traitsArray[3].value[0] + 1,
+      affection_level: traitsArray[5].value[0] + 1,
       energy_level: traitsArray[2].value[0] + 1,
-      grooming: traitsArray[7].value[0] + 1,
+      grooming: traitsArray[4].value[0] + 1,
       health_issues: traitsArray[1].value[0] + 1,
       intelligence: traitsArray[0].value[0] + 1,
-      shedding_level: 3,
       social_needs: traitsArray[0].value[0] + 1,
-      stranger_friendly: traitsArray[0].value[0] + 1,
-      vocalisation: 3,
-      experimental: 0,
-      hairless: 0,
-      natural: 1,
-      rare: 0,
-      rex: 0,
-      suppressed_tail: 0,
-      short_legs: 0,
-      hypoallergenic: 0,
       image:
         "https://seniordeal.se/app/uploads/articleimages/katter-383607-unsplash.jpg",
     };
@@ -74,6 +54,7 @@
         console.error(err);
       });
   }
+
   let flags = [
     "Afghanistan",
     "Albania",
@@ -284,26 +265,16 @@
               bind:value={breedName}
             />
           </div>
-          <div
-            style="text-align: left;
-            font-size: 14px;
-            font-family: Arial;
-            font-style: italic;
-            width: 80%;"
-          >
-            Temperament
-          </div>
           <select bind:value={breedOrigin}>
-          {#each flags as flag}
-            <option placeholder={flag} value={flag}>{flag}</option>
+            {#each flags as flag}
+              <option placeholder={flag} value={flag}>{flag}</option>
             {/each}
-
           </select>
-            <img
-              src="https://countryflagsapi.com/png/{breedOrigin}"
-              alt=""
-              style="width: 60px;margin-top: 10px;"
-            />
+          <img
+            src="https://countryflagsapi.com/png/{breedOrigin}"
+            alt=""
+            style="width: 60px;margin-top: 10px;"
+          />
         </div>
 
         {#each traitsArray as item}

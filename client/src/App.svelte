@@ -1,7 +1,7 @@
 <script lang="ts">
   import Modal from "svelte-simple-modal";
   import { fade, fly } from "svelte/transition";
-  import FetchCats from "./lib/FetchCats.svelte";
+  import FetchCats from "./lib/Cats.svelte";
   import Header from "./lib/Header.svelte";
   let unique = {};
   function restart() {

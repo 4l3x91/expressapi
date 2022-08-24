@@ -43,12 +43,6 @@ Returns the cat object which has the id `abys`
 
 #
 
-### `GET <host>/api/cats/random`
-
-Returns a random cat breed entry
-
-#
-
 ### `GET <host>/api/cats/endpoints`
 
 Returns the endpoints, and their descriptions.
@@ -60,59 +54,26 @@ Returns the endpoints, and their descriptions.
 Post a new cat object using the template:
 
 ```json
-  "weight": {
-    "imperial": "string",
-    "metric": "string",
-  },
-  "id": "excb",
-  "name": "Example cat breed",
-  "temperament": "Confident, Playful",
-  "origin": "Sweden",
-  "description": "The most awesome cat breed. Ever.",
-  "life_span": "20 - 30",
-  "indoor": 4,
-  "lap": 5,
-  "adaptability": 5,
-  "affection_level": 5,
-  "child_friendly": 4,
-  "cat_friendly": 4,
-  "dog_friendly": 2,
-  "energy_level": 4,
-  "grooming": 2,
-  "health_issues": 1,
-  "intelligence": 5,
-  "shedding_level": 1,
-  "social_needs": 3,
-  "stranger_friendly": 2,
-  "vocalisation": 2,
-  "experimental": 1,
-  "hairless": 1,
-  "natural": 1,
-  "rare": 1,
-  "rex": 1,
-  "suppressed_tail": 1,
-  "short_legs": 0,
-  "hypoallergenic": 0,
-  "image": "string",
+    "weight": "3 - 5",
+    "name": "Abyssinian",
+    "origin": "Egypt",
+    "description": "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
+    "life_span": "14 - 15",
+    "adaptability": 5,
+    "affection_level": 5,
+    "energy_level": 5,
+    "grooming": 1,
+    "health_issues": 2,
+    "intelligence": 5,
+    "image": "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"
 ```
 
 #
 
 ### `PUT <host>/api/cats/<id>`
 
-Modify a specific cat object's property values:
+Modify an already existing cat breed.
 
-From
-
-```json
-  "energy_level": 1
-```
-
-To
-
-```json
-  "energy_level": 3
-```
 #
 # Client
 ## <i>TODO</i>

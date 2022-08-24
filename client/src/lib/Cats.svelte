@@ -16,13 +16,9 @@
   fetchData();
 </script>
 
-<div class="cat-container" style="background-image: url('/src/assets/randomCat.jpg')">
-  <div class="cat-container-name">Test</div>
-</div>
-
   {#each breedArray as item}
     <div
-      on:click={() => {open(Popup, { specificCat: item, testArr: breedArray })}}
+      on:click={() => {open(Popup, { specificCat: item })}}
       class="cat-container"
       style="background-image: url({item.image});"
     >

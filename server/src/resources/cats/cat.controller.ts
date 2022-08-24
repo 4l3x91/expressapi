@@ -16,14 +16,6 @@ export const getObject = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export const getRandomObject = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-// TODO
-};
-
 export const getAllObjects = (
   req: Request,
   res: Response,
@@ -64,7 +56,6 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
     weight: req.body.weight,
     id: nanoid(),
     name: req.body.name,
-    temperament: req.body.temperament,
     origin: req.body.origin,
     description: req.body.description,
     life_span: req.body.life_span,
