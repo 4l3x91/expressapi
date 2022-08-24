@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+import { nanoid } from "nanoid";
 import { cats, dbPath, jsonReader, saveToFile } from "../data/data.handler";
-import { Cat, catSchema } from "./cat.model";
+import { Cat } from "./cat.model";
 import catRouter from "./cat.router";
 
-// Only works if it's here(?)
 jsonReader(dbPath);
 
 export const getObject = (req: Request, res: Response, next: NextFunction) => {
@@ -38,7 +38,7 @@ export const deleteAllObjects = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(200).json(cats.splice(0, cats.length));
+  res.status(204).json(cats.splice(0, cats.length));
   next();
 };
 
@@ -51,54 +51,30 @@ export const deleteObject = (
   var cat = cats.find((x) => x.id === id);
 
   if (cat) {
-    res.status(200).json(cats.splice(cats.indexOf(cat), 1));
+    res.status(204).json(cats.splice(cats.indexOf(cat), 1));
     saveToFile(cats);
   }
-  else res.status(204).json({ message: "Not found" });
+  else res.status(404).json({ message: "Not found" });
 
   next();
 };
 
-export const validateObject = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // TODO: Validate object
-};
-
 export const postObject = (req: Request, res: Response, next: NextFunction) => {
   let cat: Cat = {
-    weight: req.body.weight + "kg",
-    id: req.body.name[0].toLowerCase() + "-test",
+    weight: req.body.weight,
+    id: nanoid(),
     name: req.body.name,
     temperament: req.body.temperament,
     origin: req.body.origin,
     description: req.body.description,
     life_span: req.body.life_span,
-    indoor: req.body.indoor,
-    lap: req.body.lap,
     adaptability: req.body.adaptability,
     affection_level: req.body.affection_level,
-    child_friendly: req.body.child_friendly,
-    cat_friendly: req.body.cat_friendly,
-    dog_friendly: req.body.dog_friendly,
-    energy_level: req.body.energy_level,
     grooming: req.body.grooming,
     health_issues: req.body.health_issues,
     intelligence: req.body.intelligence,
-    shedding_level: req.body.shedding_level,
+    energy_level: req.body.energy_level,
     social_needs: req.body.social_needs,
-    stranger_friendly: req.body.stranger_friendly,
-    vocalisation: req.body.vocalisation,
-    experimental: req.body.experimental,
-    hairless: req.body.hairless,
-    natural: req.body.natural,
-    rare: req.body.rare,
-    rex: req.body.rex,
-    suppressed_tail: req.body.suppressed_tail,
-    short_legs: req.body.short_legs,
-    hypoallergenic: req.body.hypoallergenic,
     image: req.body.image,
   };
 
@@ -118,7 +94,7 @@ export const editObject = (req: Request, res: Response, next: NextFunction) => {
       cats[catIndex] = {id, ...req.body};
       res.status(200).json(cats[catIndex]);
       saveToFile(cats);
-    } else res.status(204).json({ message: "Cat not found." });
+    } else res.status(404).json({ message: "Cat not found." });
   
     next();
 };
@@ -138,14 +114,4 @@ export const getEndPoints = (
         };
       })
   );
-};
-
-export const validateCat = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const result = catSchema.validate(req.body);
-  if (result.error) res.status(400).json(result.error.message);
-  else next();
 };

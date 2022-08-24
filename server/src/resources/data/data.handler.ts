@@ -6,7 +6,6 @@ export let cats: Cat[] = [];
 
 export const dbPath = "src/resources/data/catsDB.json";
 
-// Also move this?
 if (!fs.existsSync(dbPath) || fs.readFileSync(dbPath).length === 0) initCatAPI();
 
 export async function jsonReader(filePath: string) {
@@ -27,7 +26,7 @@ export async function jsonReader(filePath: string) {
 };
 
 export async function saveToFile(data) {
-    await fs.writeFile("src/resources/data/catsDB.json", JSON.stringify(data, null, "\t"), (err) => {
+    await fs.writeFile(dbPath, JSON.stringify(data, null, "\t"), (err) => {
       if (err) console.log(err);
       else console.log("Save done.")
     });
