@@ -13,7 +13,7 @@
 
 <Modal><Header /></Modal>
 <main>
-  <div
+  <div class="grid"
     in:fly={{ y: 1000, duration: 250 }}
     out:fade={{ duration: 750 }}
   >
