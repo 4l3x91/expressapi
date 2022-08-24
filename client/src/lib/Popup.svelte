@@ -1,17 +1,12 @@
 <script lang="ts">
-  export let specificCat;
-  console.log(specificCat);
+  import { getContext } from "svelte";
   import { fly } from 'svelte/transition';
-	let visible = true;
 
+  let visible = true;
   let countryFlag;
-  function checkFlag() {
-    if (specificCat.origin === "Russia") countryFlag = "rus";
-    else if (specificCat.origin === "Iran (Persia)") countryFlag = "Iran";
-    else if (specificCat.origin === "Burma") countryFlag = "Myanmar";
-    else countryFlag = specificCat.origin;
-    return countryFlag;
-  }
+  let onCancel = () => {};
+
+  const { close } = getContext("simple-modal");
   const mapCatStats = {
     1: 5,
     2: 25,
@@ -19,6 +14,24 @@
     4: 75,
     5: 100,
   };
+
+  export let specificCat;
+  export let testArr;
+
+  async function getSpecificCatById() {
+    const modalCat = await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`);
+    const data = await modalCat.json();
+    specificCat = data;
+  }
+
+  function checkFlag() {
+    if (specificCat.origin === "Russia") countryFlag = "rus";
+    else if (specificCat.origin === "Iran (Persia)") countryFlag = "Iran";
+    else if (specificCat.origin === "Burma") countryFlag = "Myanmar";
+    else countryFlag = specificCat.origin;
+    return countryFlag;
+  }
+
 
   async function postKitty() {
     console.log(specificCat.name);
@@ -57,8 +70,6 @@
   }
 
   async function delKitty() {
-    console.log(specificCat.name);
-    console.log(specificCat.id);
     await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`, {
       method: "DELETE",
       headers: {
@@ -73,10 +84,6 @@
         console.error(err);
       });
   }
-  import { getContext } from "svelte";
-  let onCancel = () => {};
-
-  const { close } = getContext("simple-modal");
 
   function _onCancel() {
     onCancel();
@@ -84,17 +91,10 @@
   }
   async function _onDelete() {
     await delKitty();
-    delFromUI();
-    console.log(`Cat breed ${specificCat.name} deleted.`);
-    console.log("Deleting object from UI.");
     _onCancel();
-    console.log("Closing modal.");
-    alert("Breed has been deleted!")
   }
 
-  function delFromUI() {
-    // relaod parent component(?)
-  }
+  getSpecificCatById();
 </script>
 
 <label>
