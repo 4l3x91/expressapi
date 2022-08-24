@@ -1,26 +1,28 @@
 <script lang="ts">
+  import { getContext } from 'svelte';
+  import Popup from "./Popup.svelte";
+
+  const { open } = getContext("simple-modal");
+  let breedArray = [];
+  
   async function fetchData() {
     const fetchResult = await fetch("http://localhost:3000/api/cats");
     const data = await fetchResult.json();
     if (data) console.log("Data fetched successfully!");
+    breedArray = data;
     return data;
   }
-  import { getContext } from "svelte";
-  import Popup from "./Popup.svelte";
-  const { open } = getContext("simple-modal");
+
+  fetchData();
 </script>
 
-<div class="cat-container" style="background-image: url('/src/assets/randomCat.jpg');
-background-size: cover;
-background-repeat: no-repeat;">
-<div class="cat-container-name">
-  Test
+<div class="cat-container" style="background-image: url('/src/assets/randomCat.jpg')">
+  <div class="cat-container-name">Test</div>
 </div>
-</div>
-{#await fetchData() then items}
-  {#each items as item}
+
+  {#each breedArray as item}
     <div
-      on:click={() => open(Popup, { specificCat: item })}
+      on:click={() => {open(Popup, { specificCat: item, testArr: breedArray })}}
       class="cat-container"
       style="background-image: url({item.image});"
     >
@@ -29,7 +31,7 @@ background-repeat: no-repeat;">
       </div>
     </div>
   {/each}
-{/await}
+
 <style>
   .cat-container {
     background-color: #1a1a1a;
