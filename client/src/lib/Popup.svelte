@@ -1,6 +1,14 @@
 <script lang="ts">
   import { getContext } from "svelte";
-  import { fly } from 'svelte/transition';
+  import { fly } from "svelte/transition";
+  import { breedArray } from "./stores";
+  async function getBreedById() {
+    const modalCat = await fetch(
+      `http://localhost:3000/api/cats/id/${specificCat.id}`
+    );
+    specificCat = await modalCat.json();
+  };
+  getBreedById();
 
   let countryFlag;
   let onCancel = () => {};
@@ -16,12 +24,6 @@
 
   export let specificCat;
 
-  async function getSpecificCatById() {
-    const modalCat = await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`);
-    const data = await modalCat.json();
-    specificCat = data;
-  }
-
   function checkFlag() {
     if (specificCat.origin === "Russia") countryFlag = "rus";
     else if (specificCat.origin === "Iran (Persia)") countryFlag = "Iran";
@@ -31,6 +33,11 @@
   }
 
   async function putKitty() {
+    const cat = $breedArray.find((x) => x.id === specificCat.id);
+    const catIndex = $breedArray.indexOf(cat);
+
+    $breedArray[catIndex] = specificCat;
+    $breedArray = $breedArray;
 
     await fetch(`http://localhost:3000/api/cats/${specificCat.id}`, {
       method: "PUT",
@@ -68,14 +75,17 @@
     close();
   }
   async function _onDelete() {
+    const cat = $breedArray.find((x) => x.id === specificCat.id);
+    const catIndex = $breedArray.indexOf(cat);
+    $breedArray.splice(catIndex, 1);
+    $breedArray = $breedArray;
     await delKitty();
     _onCancel();
   }
 
-  getSpecificCatById();
   let visible = true;
   function setVisible() {
-    if(visible) visible = false;
+    if (visible) visible = false;
     else visible = true;
   }
 </script>
@@ -86,96 +96,99 @@
 </div>
 
 {#if visible}
-<div in:fly={{ y: 300, duration: 500, delay: 150 }}
-out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
-  <div class="modal-cat-container" style="display: flex;">
-    <div class="modal-cat-container-left" style="width: 100%">
-      <div style="padding: 10px; text-align: left;">
-        The
+  <div
+    in:fly={{ y: 300, duration: 500, delay: 150 }}
+    out:fly={{ y: 300, duration: 500 }}
+    class="modal-cat-container"
+  >
+    <div class="modal-cat-container" style="display: flex;">
+      <div class="modal-cat-container-left" style="width: 100%">
+        <div style="padding: 10px; text-align: left;">
+          The
+          <div
+            style="text-transform: uppercase; font-size: 32px; line-height: .9;"
+          >
+            {specificCat.name}
+          </div>
+          <img
+            src="https://countryflagsapi.com/png/{checkFlag()}"
+            alt=""
+            style="height: 40px;margin-top: 10px;"
+          />
+        </div>
+        <div class="breed-characteristics">
+          <div class="breed-label">Characteristics</div>
+          <div class="breed-trait-container">
+            <div>Intelligence</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.intelligence]}%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="breed-trait-container">
+            <div>Health Issues</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.health_issues]}%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="breed-trait-container">
+            <div>Energy Level</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.energy_level]}%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="breed-trait-container">
+            <div>Adaptability</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.adaptability]}%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="breed-trait-container">
+            <div>Grooming</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.grooming]}%;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="breed-trait-container">
+            <div>Affection</div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar">
+                <span
+                  class="progress-bar-fill"
+                  style="width: {mapCatStats[specificCat.affection_level]}%;"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-cat-container-right" style="width: 100%">
         <div
-          style="text-transform: uppercase; font-size: 32px; line-height: .9;"
-        >
-          {specificCat.name}
-        </div>
-        <img
-          src="https://countryflagsapi.com/png/{checkFlag()}"
-          alt=""
-          style="height: 40px;margin-top: 10px;"
-        />
-      </div>
-      <div class="breed-characteristics">
-        <div class="breed-label">Characteristics</div>
-        <div class="breed-trait-container">
-          <div>Intelligence</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.intelligence]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Health Issues</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.health_issues]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Energy Level</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.energy_level]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Adaptability</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.adaptability]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Grooming</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.grooming]}%;"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="breed-trait-container">
-          <div>Affection</div>
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar">
-              <span
-                class="progress-bar-fill"
-                style="width: {mapCatStats[specificCat.affection_level]}%;"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-cat-container-right" style="width: 100%">
-      <div
-        style="
+          style="
     background: #0c0c0c;
     background-image: url('{specificCat.image}');
     background-position-x: 0%;
@@ -190,58 +203,78 @@ out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
   background-origin: content-box;
   background-repeat: no-repeat;
   max-height: 400px;"
-      />
-      <div class="breed-details">
-        <div class="breed-label">
-          Breed Details
-        </div>
-        <div
-          style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
-        >
-          <div class="weight-label" style="color: rgb(198, 198, 198);font-size: 14px;">WEIGHT</div>
-          <div>{specificCat.weight}
-          {#if specificCat.weight != "N/A"}
-          <span> kg</span>
-          {/if}
+        />
+        <div class="breed-details">
+          <div class="breed-label">Breed Details</div>
+          <div
+            style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
+          >
+            <div
+              class="weight-label"
+              style="color: rgb(198, 198, 198);font-size: 14px;"
+            >
+              WEIGHT
+            </div>
+            <div>
+              {specificCat.weight}
+              {#if specificCat.weight != "N/A"}
+                <span> kg</span>
+              {/if}
+            </div>
           </div>
-        </div>
-        <div
-          style="display: flex;justify-content: space-between;text-align: right;border-top: 1px solid #b5b5b5;border-bottom: 1px solid #b5b5b5;padding: 10px;"
-        >
-          <div class="lifespan-label" style="font-size: 14px;color: rgb(198, 198, 198);">LIFESPAN</div>
-          <div>{specificCat.life_span} years</div>
-        </div>
-        <div
-          style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
-        >
-          <div class="origin-label" style="color: rgb(198, 198, 198);font-size: 14px;">ORIGIN</div>
-          <div>{specificCat.origin}</div>
+          <div
+            style="display: flex;justify-content: space-between;text-align: right;border-top: 1px solid #b5b5b5;border-bottom: 1px solid #b5b5b5;padding: 10px;"
+          >
+            <div
+              class="lifespan-label"
+              style="font-size: 14px;color: rgb(198, 198, 198);"
+            >
+              LIFESPAN
+            </div>
+            <div>{specificCat.life_span} years</div>
+          </div>
+          <div
+            style="display: flex;justify-content: space-between;text-align: right;padding: 10px;"
+          >
+            <div
+              class="origin-label"
+              style="color: rgb(198, 198, 198);font-size: 14px;"
+            >
+              ORIGIN
+            </div>
+            <div>{specificCat.origin}</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div style="height: 70px;"></div>
+    <div style="height: 70px;" />
     <div class="breed-label">About</div>
     <div class="" style="text-align: left; padding: 10px;">
       {specificCat.description}
     </div>
   </div>
 {:else}
-<div in:fly={{ y: 300, duration: 500, delay: 150 }}
-out:fly={{ y: 300, duration: 500 }} class="modal-cat-container">
-<h1>Form</h1>
-<form class="content" on:submit|preventDefault={() => { visible = true; }}>
-  <div>Name</div>
-  
-  <input type="text" bind:value={specificCat.name} />
-  <div>Description</div>
-  <input type="text" bind:value={specificCat.description} />
-	<button on:click={putKitty}>
-		Submit
-	</button>
-</form>
-</div>
+  <div
+    in:fly={{ y: 300, duration: 500, delay: 150 }}
+    out:fly={{ y: 300, duration: 500 }}
+    class="modal-cat-container"
+  >
+    <h1>Form</h1>
+    <form
+      class="content"
+      on:submit|preventDefault={() => {
+        visible = true;
+      }}
+    >
+      <div>Name</div>
+
+      <input type="text" bind:value={specificCat.name} />
+      <div>Description</div>
+      <input type="text" bind:value={specificCat.description} />
+      <button on:click={putKitty}> Submit </button>
+    </form>
+  </div>
 {/if}
 
 <style>

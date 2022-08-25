@@ -1,16 +1,14 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-	import { onMount } from 'svelte';
+  import { getContext, onMount } from "svelte";
   import AddPopup from "./AddPopup.svelte";
   import Popup from "./Popup.svelte";
 
   const { open } = getContext("simple-modal");
-  let breedArray = [];
-  import { searchInput } from './stores.js';
+  import { searchInput, breedArray } from './stores.js';
 
   onMount(async () => {
       const fetchResult = await fetch("http://localhost:3000/api/cats");
-      breedArray = await fetchResult.json();
+      $breedArray = await fetchResult.json();
       if (breedArray) console.log("Data fetched successfully!");
     });
 </script>
@@ -18,7 +16,8 @@
 <div on:click={() => open(AddPopup, {})} class="plus cat-container add-breed">
   <div class="add-breed-text">Add breed</div>
 </div>
-{#each breedArray as item (item.id)}
+{#each $breedArray as item (item.id)}
+
   {#if $searchInput.length < 1 || item.name
       .toLowerCase()
       .includes($searchInput.toLowerCase())}
@@ -34,8 +33,7 @@
       </div>
     </div>
   {/if}
-{/each}
-
+  {/each}
 <style>
   .plus {
     border-radius: 50%;

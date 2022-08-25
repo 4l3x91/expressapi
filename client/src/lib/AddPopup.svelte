@@ -24,7 +24,7 @@
     { name: "Affection", propName: "affection_level", value: [1, 5] },
   ];
 
-  function setValues() {
+  function newCat(){
     const cat = {
       weight: `${weight[0] + 5}-${weight[1] + 5}`,
       name: breedName,
@@ -48,7 +48,7 @@
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(setValues()),
+      body: JSON.stringify(newCat()),
     })
       .then((result) => {
         console.log("Completed with result:", result);
@@ -254,12 +254,26 @@
     "Zambia",
     "Zimbabwe",
   ];
+  import { breedArray } from "./stores";
+  import { getContext } from "svelte";
+  const { close } = getContext("simple-modal");
+  let onCancel = () => {};
+  function _onCancel() {
+    onCancel();
+    close();
+  }
 </script>
 
 <div class="modal-cat-container">
   <div class="modal-cat-container d-flex">
     <div class="modal-cat-container-left w-100">
-      <form on:submit|preventDefault={(e) => postKitty()}>
+      <form on:submit|preventDefault={(e) => {
+        $breedArray.push(newCat());
+        $breedArray = $breedArray;
+        postKitty();
+        _onCancel();
+      }
+      }>
         <div class="breed-name-container">
           <div class="breed-name-text">Breed name</div>
           <div class="breed-input-container">
