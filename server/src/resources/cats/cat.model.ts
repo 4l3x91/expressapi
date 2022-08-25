@@ -11,6 +11,5 @@ export interface Cat {
   grooming: number;
   health_issues: number;
   intelligence: number;
-  social_needs: number;
   image: string;
 }

@@ -65,7 +65,6 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
     health_issues: req.body.health_issues,
     intelligence: req.body.intelligence,
     energy_level: req.body.energy_level,
-    social_needs: req.body.social_needs,
     image: req.body.image,
   };
 
