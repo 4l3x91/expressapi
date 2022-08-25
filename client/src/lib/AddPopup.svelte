@@ -10,7 +10,7 @@
   let breedName;
   let breedOrigin;
   let breedDescription;
-  let breedImage;
+  let breedImage = "";
 
   function grabRandomCatMoji() {
     let catArray = ["🐱", "😻", "😽", "😿", "😸", "😾", "🙀", "😹", "😼", "😺"];
@@ -393,13 +393,17 @@
         </div>
 
         <div class="breed-image-container">
-          <div class="breed-image-text">Image link</div>
+          <div class="breed-image-text">
+            Image link
+            <div style="font-size: 10px; align-self: center; display: inline;">
+              Leave blank for default image
+            </div>
+          </div>
           <div class="breed-input-container">
             <input
               type="url"
               class="image-input w-100"
-              placeholder="Enter breed name"
-              minlength="4"
+              placeholder="Enter image link"
               bind:value={breedImage}
             />
           </div>
@@ -503,6 +507,12 @@
 
   .breed-origin-text {
     padding: 10px 0;
+  }
+
+  .breed-image-text {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
   }
 
   .breed-origin-flag-container {
