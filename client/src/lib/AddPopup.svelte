@@ -265,7 +265,9 @@
           <div class="breed-input-container">
             <input
               class="breed-input"
+              minlength="4"
               placeholder="Enter breed name"
+              required
               bind:value={breedName}
             />
           </div>
@@ -379,8 +381,10 @@
           <div class="breed-image-text">Image link</div>
           <div class="breed-input-container">
             <input
+              type="url"
               class="image-input w-100"
               placeholder="Enter breed name"
+              minlength="4"
               bind:value={breedImage}
             />
           </div>
@@ -390,6 +394,7 @@
           <div class="breed-description-text">Breed description</div>
           <div class="breed-input-container">
             <textarea
+              required
               class="breed-input breed-description-input"
               placeholder="Enter breed description"
               bind:value={breedDescription}
@@ -404,8 +409,15 @@
 </div>
 
 <style>
-  button {
+  input:focus:invalid,
+  textarea:invalid {
+    border: 1px solid red;
   }
+
+  textarea:valid {
+    border: 1px solid green;
+  }
+
   .breed-image-container {
     padding: 20px 0;
   }
