@@ -112,6 +112,9 @@ button:focus-visible {
   z-index: 100;
 }
 
+.thumb-content::before {
+  background: none !important;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
