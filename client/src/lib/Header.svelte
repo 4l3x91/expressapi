@@ -1,11 +1,12 @@
 <script lang="ts">
   import catExpressLogo from "../assets/catexpress.png";
+  import { searchInput } from './stores.js';
 </script>
 
 <header>
+  <input bind:value={$searchInput}>
   <img src={catExpressLogo} class="logo" alt="CatExpress Logo" />
   <h1>CatExpress</h1>
-
 </header>
 
 <style>

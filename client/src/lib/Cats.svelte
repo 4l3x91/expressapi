@@ -1,40 +1,39 @@
 <script lang="ts">
   import { getContext } from "svelte";
+	import { onMount } from 'svelte';
   import AddPopup from "./AddPopup.svelte";
   import Popup from "./Popup.svelte";
 
   const { open } = getContext("simple-modal");
   let breedArray = [];
+  import { searchInput } from './stores.js';
 
-  async function fetchData() {
-    const fetchResult = await fetch("http://localhost:3000/api/cats");
-    const data = await fetchResult.json();
-    if (data) console.log("Data fetched successfully!");
-    breedArray = data;
-    return data;
-  }
-
-  fetchData();
+  onMount(async () => {
+      const fetchResult = await fetch("http://localhost:3000/api/cats");
+      breedArray = await fetchResult.json();
+      if (breedArray) console.log("Data fetched successfully!");
+    });
 </script>
 
-  <div
-    on:click={() => open(AddPopup, {})}
-    class="plus cat-container add-breed"
-  >
-    <div class="add-breed-text">Add breed</div>
-  </div>
+<div on:click={() => open(AddPopup, {})} class="plus cat-container add-breed">
+  <div class="add-breed-text">Add breed</div>
+</div>
 {#each breedArray as item (item.id)}
-  <div
-    on:click={() => {
-      open(Popup, { specificCat: item });
-    }}
-    class="cat-container"
-    style="background-image: url({item.image});"
-  >
-    <div class="cat-container-name">
-      {item.name}
+  {#if $searchInput.length < 1 || item.name
+      .toLowerCase()
+      .includes($searchInput.toLowerCase())}
+    <div
+      on:click={() => {
+        open(Popup, { specificCat: item });
+      }}
+      class="cat-container"
+      style="background-image: url({item.image});"
+    >
+      <div class="cat-container-name">
+        {item.name}
+      </div>
     </div>
-  </div>
+  {/if}
 {/each}
 
 <style>
