@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { nanoid } from "nanoid";
+import { port, url } from "../../server";
 import { cats, dbPath, jsonReader, saveToFile } from "../data/data.handler";
 import { Cat } from "./cat.model";
 import catRouter from "./cat.router";
@@ -11,9 +12,7 @@ export const getObject = (req: Request, res: Response, next: NextFunction) => {
   const cat = cats.find((x) => x.id === id);
 
   if (cat) res.status(200).json(cat);
-  else res.status(204).json({ message: "Not found" });
-
-  next();
+  else next();
 };
 
 export const getAllObjects = (
@@ -21,17 +20,10 @@ export const getAllObjects = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(200).json(cats);
-  next();
-};
-
-export const deleteAllObjects = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  res.status(204).json(cats.splice(0, cats.length));
-  next();
+  res.status(200).json(cats).on("error", (err: Error) => {
+    throw err;
+  }
+)
 };
 
 export const deleteObject = (
@@ -46,12 +38,15 @@ export const deleteObject = (
     res.status(204).json(cats.splice(cats.indexOf(cat), 1));
     saveToFile(cats);
   }
-  else res.status(404).json({ message: "Not found" });
-
-  next();
+  else next();
 };
 
 export const postObject = (req: Request, res: Response, next: NextFunction) => {
+  let imageURL = req.body.image;
+  if(imageURL || imageURL.includes('png') || imageURL.includes('jpg')) {
+    imageURL = req.body.image;
+  } else imageURL = `${url}${port}/img/default_cat.png`;
+  
   let cat: Cat = {
     weight: req.body.weight,
     id: nanoid(),
@@ -65,15 +60,13 @@ export const postObject = (req: Request, res: Response, next: NextFunction) => {
     health_issues: req.body.health_issues,
     intelligence: req.body.intelligence,
     energy_level: req.body.energy_level,
-    image: req.body.image,
+    image: imageURL,
   };
 
   cats.push(cat);
   saveToFile(cats);
   console.log("Cat posted successfully!");
-  res.status(200).json(cat);
-
-  next();
+  res.status(201).json(cat);
 };
 
 export const editObject = (req: Request, res: Response, next: NextFunction) => {
@@ -84,9 +77,7 @@ export const editObject = (req: Request, res: Response, next: NextFunction) => {
       cats[catIndex] = {id, ...req.body};
       res.status(200).json(cats[catIndex]);
       saveToFile(cats);
-    } else res.status(404).json({ message: "Cat not found." });
-  
-    next();
+    } else next();
 };
 
 export const getEndPoints = (

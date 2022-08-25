@@ -12,8 +12,7 @@ app.use(express.static('public'))
 app.use(cors());
 app.use(logger);
 app.use("/api/cats", catRouter);
-app.use(notFoundHandler);
-app.use(errorHandler);
+app.use(notFoundHandler, errorHandler);
 
 app.listen(port, () => {
     console.log(`Server is running on: ${url}${port}`);

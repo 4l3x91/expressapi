@@ -10,7 +10,8 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     res.status(500).json(err.message)
 }
 
-export const notFoundHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err);
-    res.status(404).json(err.message)
+export const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
+    res.status(404).json({message:
+        'Resource does not exist.'
+    });
 }
