@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { getContext } from 'svelte';
+  import { getContext } from "svelte";
+  import AddPopup from "./AddPopup.svelte";
   import Popup from "./Popup.svelte";
 
   const { open } = getContext("simple-modal");
   let breedArray = [];
-  
+
   async function fetchData() {
     const fetchResult = await fetch("http://localhost:3000/api/cats");
     const data = await fetchResult.json();
@@ -16,19 +17,48 @@
   fetchData();
 </script>
 
-  {#each breedArray as item}
-    <div
-      on:click={() => {open(Popup, { specificCat: item })}}
-      class="cat-container"
-      style="background-image: url({item.image});"
-    >
-      <div class="cat-container-name">
-        {item.name}
-      </div>
+  <div
+    on:click={() => open(AddPopup, {})}
+    class="plus cat-container add-breed"
+  >
+    <div class="add-breed-text">Add breed</div>
+  </div>
+{#each breedArray as item (item.id)}
+  <div
+    on:click={() => {
+      open(Popup, { specificCat: item });
+    }}
+    class="cat-container"
+    style="background-image: url({item.image});"
+  >
+    <div class="cat-container-name">
+      {item.name}
     </div>
-  {/each}
+  </div>
+{/each}
 
 <style>
+  .plus {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+  }
+
+  .plus::before {
+    content: "+";
+    font-size: 185px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: courier;
+    height: 80%;
+    flex-direction: center;
+  }
+  .add-breed-text {
+    font-size: 24px;
+  }
   .cat-container {
     background-color: #1a1a1a;
     color: white;
