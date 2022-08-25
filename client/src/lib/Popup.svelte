@@ -1,17 +1,19 @@
 <script lang="ts">
+  import { toast } from "@zerodevx/svelte-toast";
   import { getContext } from "svelte";
   import { fly } from "svelte/transition";
   import { breedArray } from "./stores";
+  export let specificCat;
+  let countryFlag;
+  let onCancel = () => {};
+
   async function getBreedById() {
     const modalCat = await fetch(
       `http://localhost:3000/api/cats/id/${specificCat.id}`
     );
     specificCat = await modalCat.json();
-  };
+  }
   getBreedById();
-
-  let countryFlag;
-  let onCancel = () => {};
 
   const { close } = getContext("simple-modal");
   const mapCatStats = {
@@ -22,8 +24,6 @@
     5: 100,
   };
 
-  export let specificCat;
-
   function checkFlag() {
     if (specificCat.origin === "Russia") countryFlag = "rus";
     else if (specificCat.origin === "Iran (Persia)") countryFlag = "Iran";
@@ -32,7 +32,7 @@
     return countryFlag;
   }
 
-  async function putKitty() {
+  async function editBreed() {
     const cat = $breedArray.find((x) => x.id === specificCat.id);
     const catIndex = $breedArray.indexOf(cat);
 
@@ -54,7 +54,7 @@
       });
   }
 
-  async function delKitty() {
+  async function deleteBreed() {
     await fetch(`http://localhost:3000/api/cats/id/${specificCat.id}`, {
       method: "DELETE",
       headers: {
@@ -79,7 +79,11 @@
     const catIndex = $breedArray.indexOf(cat);
     $breedArray.splice(catIndex, 1);
     $breedArray = $breedArray;
-    await delKitty();
+    await deleteBreed();
+    toast.push(
+            "Breed has been deleted! 😿",
+            { classes: ['custom', 'success'] }
+          );
     _onCancel();
   }
 
@@ -264,7 +268,7 @@
     <form
       class="content"
       on:submit|preventDefault={() => {
-        visible = true;
+        setVisible();
       }}
     >
       <div>Name</div>
@@ -272,12 +276,33 @@
       <input type="text" bind:value={specificCat.name} />
       <div>Description</div>
       <input type="text" bind:value={specificCat.description} />
-      <button on:click={putKitty}> Submit </button>
+      <button
+        on:click={() => {
+          editBreed();
+          toast.push(
+            "Breed has been updated! 😻",
+            { classes: ['custom', 'success'] },
+            { pausable: true }
+          );
+        }}
+      >
+        Submit
+      </button>
     </form>
   </div>
 {/if}
 
 <style>
+    :global(.custom) {
+      --toastBarBackground: rgba(0,0,0,.2);
+      --toastWidth: 20rem;
+      --toastBorderRadius: .3rem;
+      --toastBarHeight: 100%;
+    }
+    :global(.success) {
+      --toastBackground: #00791e;
+    }
+
   .breed-trait-container {
     text-align: left;
     padding: 10px;

@@ -1,10 +1,14 @@
 <script lang="ts">
   import Slider from "@bulatdashiev/svelte-slider";
+  import { toast } from "@zerodevx/svelte-toast";
+  import { getContext } from "svelte";
+  import { breedArray } from "./stores";
+  const { close } = getContext("simple-modal");
+
   let life_span = [5, 40];
   let weight = [3, 35];
   let breedName;
   let breedOrigin;
-
   let breedDescription;
   let breedImage;
 
@@ -24,7 +28,7 @@
     { name: "Affection", propName: "affection_level", value: [1, 5] },
   ];
 
-  function newCat(){
+  function newCat() {
     const cat = {
       weight: `${weight[0] + 5}-${weight[1] + 5}`,
       name: breedName,
@@ -42,20 +46,17 @@
     return cat;
   }
 
-  async function postKitty() {
-    await fetch(`http://localhost:3000/api/cats`, {
+  async function postNewBreed() {
+    const response = await fetch(`http://localhost:3000/api/cats`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newCat()),
-    })
-      .then((result) => {
-        console.log("Completed with result:", result);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    });
+    const newCatBreed = await response.json();
+    $breedArray.push(newCatBreed);
+    $breedArray = $breedArray;
   }
 
   let flags = [
@@ -254,9 +255,7 @@
     "Zambia",
     "Zimbabwe",
   ];
-  import { breedArray } from "./stores";
-  import { getContext } from "svelte";
-  const { close } = getContext("simple-modal");
+
   let onCancel = () => {};
   function _onCancel() {
     onCancel();
@@ -267,13 +266,15 @@
 <div class="modal-cat-container">
   <div class="modal-cat-container d-flex">
     <div class="modal-cat-container-left w-100">
-      <form on:submit|preventDefault={(e) => {
-        $breedArray.push(newCat());
-        $breedArray = $breedArray;
-        postKitty();
-        _onCancel();
-      }
-      }>
+      <form
+        on:submit|preventDefault={(e) => {
+          postNewBreed();
+          _onCancel();
+          toast.push("Breed has been added! 😸", {
+            classes: ["custom", "success"],
+          });
+        }}
+      >
         <div class="breed-name-container">
           <div class="breed-name-text">Breed name</div>
           <div class="breed-input-container">

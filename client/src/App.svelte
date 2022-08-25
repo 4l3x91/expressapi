@@ -1,8 +1,9 @@
 <script lang="ts">
   import Modal from "svelte-simple-modal";
   import { fade, fly } from "svelte/transition";
-  import Cat from "./lib/Cat.svelte";
+  import Cats from "./lib/Cats.svelte";
   import Header from "./lib/Header.svelte";
+  import { SvelteToast } from '@zerodevx/svelte-toast'
 </script>
 
 <Modal><Header /></Modal>
@@ -13,7 +14,8 @@
     out:fade={{ duration: 750 }}
   >
     <Modal>
-      <Cat />
+      <SvelteToast />
+      <Cats />
     </Modal>
   </div>
 </main>
