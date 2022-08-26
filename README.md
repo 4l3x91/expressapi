@@ -1,39 +1,40 @@
 # 😼 <i>CAT Express</i> 🚄
 
-## 🐱🐈😸🐱‍👓😹🐱‍🐉😺🐱‍🏍😻😼🐱‍💻😽😾🐱‍🚀😿🐱‍👤🙀
-In CatExpress you can Create, Read, Update and Delete cat breeds.
+## With CatExpress you can Create, Read, Update and Delete cat breeds
 
-### Add breed
+## Features
+### 😽Add breed 
 - Add a breed by clicking on the big plus button which says "Add Breed".
 - Fill out the information.
 - If you leave the image field blank, a default cat image will be used.
 - Click Submit.
 - A toast message will tell you the breed has been added.
 
-### Edit breed
+### 🙀 Edit breed 
 - Edit a breed by clicking on the cat breed you want to edit, in the grid.
 - Click the edit button (📝) on the top left.
 - Edit the form to your needs.
 - Click submit.
 - A toast message will tell you the breed has been updated.
 
-### Delete breed
+### 😿 Delete breed 
 - Delete a breed by clicking on the breed you want to delete, in the grid.
 - Click the delete button (🗑️) on the top left.
 - A toast message will tell you the breed has been deleted.
 
+### 😻 Search breed 
+- Click the search bar on the top left to find a specific cat breed.
+- Search filters out breeds based on breed names.
+
+### 🐱‍ CatExpress data 
+- The origin flags shown in CatExpress come from https://www.countryflagsapi.com/
+- The breeds that are fetched if `catsDB.json` does not exist, come from https://api.thecatapi.com/v1/breeds
+
 ### CatExpress consists of a server side and a client side
 - The server side is built on TypeScript using Express.
 - The client side is built on Svelte using Vite. 
-By default the CatExpress server runs on `localhost` and port `3000`
+- By default the CatExpress server runs on `localhost` and port `3000`
 
-### Search breed
-- Click the search bar on the top left to find a specific cat breed. Search filters out breeds based on breed names.
-
-
-### CatExpress data
-- The origin flags shown in CatExpress come from https://www.countryflagsapi.com/
-- The breeds that are fetched if `catsDB.json` does not exist, come from https://api.thecatapi.com/v1/breeds
 
 #
 ## Requirements
