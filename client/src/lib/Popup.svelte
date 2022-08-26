@@ -1,15 +1,24 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
-  export let specificCat;
-  let countryFlag;
-
   import Slider from "@bulatdashiev/svelte-slider";
   import { toast } from "@zerodevx/svelte-toast";
   import { getContext } from "svelte";
   import { breedArray } from "./stores";
+  import { fly } from "svelte/transition";
+  export let specificCat;
+  let countryFlag;
 
   let life_span = [5, 40];
   let weight = [3, 35];
+  let onCancel = () => {};
+  let visible = true;
+  const { close } = getContext("simple-modal");
+  const mapCatStats = {
+    1: 5,
+    2: 25,
+    3: 50,
+    4: 75,
+    5: 100,
+  };
 
 
   function grabRandomCatMoji() {
@@ -20,12 +29,12 @@
   }
 
   let traitsArray = [
-    { name: "Intelligence", propName: "intelligence", value: [1, 5] },
-    { name: "Health Issues", propName: "health_issues", value: [1, 5] },
-    { name: "Energy Level", propName: "energy_level", value: [1, 5] },
-    { name: "Adaptability", propName: "adaptability", value: [1, 5] },
-    { name: "Grooming", propName: "grooming", value: [1, 5] },
-    { name: "Affection", propName: "affection_level", value: [1, 5] },
+    { name: "Intelligence", propName: "intelligence", value: [specificCat.intelligence, 5] },
+    { name: "Health Issues", propName: "health_issues", value: [specificCat.health_issues, 5] },
+    { name: "Energy Level", propName: "energy_level", value: [specificCat.energy_level, 5] },
+    { name: "Adaptability", propName: "adaptability", value: [specificCat.adaptability, 5] },
+    { name: "Grooming", propName: "grooming", value: [specificCat.grooming, 5] },
+    { name: "Affection", propName: "affection_level", value: [specificCat.affection_level, 5] },
   ];
 
   let flags = [
@@ -225,7 +234,6 @@
     "Zimbabwe",
   ];
 
-  let onCancel = () => {};
 
   async function getBreedById() {
     const modalCat = await fetch(
@@ -234,15 +242,6 @@
     specificCat = await modalCat.json();
   }
   getBreedById();
-
-  const { close } = getContext("simple-modal");
-  const mapCatStats = {
-    1: 5,
-    2: 25,
-    3: 50,
-    4: 75,
-    5: 100,
-  };
 
   function checkFlag() {
     if (specificCat.origin === "Russia") countryFlag = "rus";
@@ -255,6 +254,16 @@
   async function editBreed() {
     const cat = $breedArray.find((x) => x.id === specificCat.id);
     const catIndex = $breedArray.indexOf(cat);
+    let newWeight = parsedWeight[0] + " - " + parsedWeight[1];
+    let newLifeSpan = parsedLifeSpan[0] + " - " + parsedLifeSpan[1];
+    specificCat.weight = newWeight;
+    specificCat.life_span = newLifeSpan;
+    specificCat.intelligence = traitsArray[0].value[0] + 1;
+    specificCat.health_issues = traitsArray[1].value[0] + 1;
+    specificCat.energy_level = traitsArray[2].value[0] + 1;
+    specificCat.adaptability = traitsArray[3].value[0] + 1;
+    specificCat.grooming = traitsArray[4].value[0] + 1;
+    specificCat.affection_level = traitsArray[5].value[0] + 1;
 
     $breedArray[catIndex] = specificCat;
     $breedArray = $breedArray;
@@ -307,11 +316,20 @@
     _onCancel();
   }
 
-  let visible = true;
   function setVisible() {
     if (visible) visible = false;
     else visible = true;
   }
+
+
+let oldWeight = specificCat.weight;
+let oldLifeSpan = specificCat.life_span;
+let parsedWeight = oldWeight.split(" ");
+let parsedLifeSpan = oldLifeSpan.split(" ");
+
+parsedWeight.splice(1, 1);
+parsedLifeSpan.splice(1, 1);
+
 </script>
 
 <div style="display: flex;">
@@ -441,7 +459,7 @@
             </div>
             
               <div>
-                {specificCat.weight}</div>
+                {specificCat.weight} kg</div>
           </div>
           <div
             style="display: flex;justify-content: space-between;text-align: right;border-top: 1px solid #b5b5b5;border-bottom: 1px solid #b5b5b5;padding: 10px;"
@@ -476,18 +494,18 @@
     </div>
   </div>
 {:else}
-  <div
+  <div class="modal-cat-container"
     in:fly={{ y: 300, duration: 500, delay: 150 }}
     out:fly={{ y: 300, duration: 500 }}
-    class="modal-cat-container"
-  >
+    >
     <form
       class="content"
       on:submit|preventDefault={() => {
         setVisible();
         editBreed();
-      }}
-    >
+        toast.push(
+                  "Breed has been updated! 😻", { classes: ['custom', 'success'] });
+      }}>
       <div class="modal-cat-container">
         <div class="modal-cat-container d-flex">
           <div class="modal-cat-container-left w-100">
@@ -554,25 +572,24 @@
                 <div class="breed-title">Weight</div>
                 <div>
                   <Slider
-                    bind:value={weight}
+                    bind:value={parsedWeight}
                     max="40"
                     range
                     on:input={(e) => {
-                      if (weight[0] > weight[1]) weight.sort();
-                      if (weight[1] < weight[0]) weight.sort();
-                      console.log(e.detail);
+                      if (parsedWeight[0] > parsedWeight[1]) parsedWeight.sort();
+                      if (parsedWeight[1] < parsedWeight[0]) parsedWeight.sort();
                     }}
                   >
                     <div slot="left">
                       <span>{grabRandomCatMoji()}</span>
                       <div class="slider-text">
-                        {weight[0] + 5}
+                        {parsedWeight[0]}
                       </div>
                     </div>
                     <div slot="right">
                       <span>{grabRandomCatMoji()}</span>
                       <div class="slider-text">
-                        {weight[1] + 5}
+                        {parsedWeight[1]}
                       </div>
                     </div>
                   </Slider>
@@ -583,25 +600,25 @@
                 <div class="breed-title">Life Span</div>
                 <div>
                   <Slider
-                    bind:value={life_span}
+                    bind:value={parsedLifeSpan}
                     max="40"
                     range
                     on:input={(e) => {
-                      if (life_span[0] > life_span[1]) life_span.sort();
-                      if (life_span[1] < life_span[0]) life_span.sort();
+                      if (parsedLifeSpan[0] > parsedLifeSpan[1]) parsedLifeSpan.sort();
+                      if (parsedLifeSpan[1] < parsedLifeSpan[0]) parsedLifeSpan.sort();
                       console.log(e.detail);
                     }}
                   >
                     <div slot="left">
                       <span>{grabRandomCatMoji()}</span>
                       <div class="slider-text">
-                        {life_span[0] + 5}
+                        {parsedLifeSpan[0]}
                       </div>
                     </div>
                     <div slot="right">
                       <span>{grabRandomCatMoji()}</span>
                       <div class="slider-text">
-                        {life_span[1] + 5}
+                        {parsedLifeSpan[1]}
                       </div>
                     </div>
                   </Slider>
@@ -638,22 +655,10 @@
               </div>
       
 
-              <button
-              on:click={() => {
-                editBreed();
-                toast.push(
-                  "Breed has been updated! 😻",
-                  { classes: ['custom', 'success'] },
-                );
-              }}
-            >
+              <button>
               Submit
             </button>
-      
-            <!-- </form> -->
           </div>
-        <!-- </div> -->
-      <!-- </div> -->
     </form>
   </div>
 {/if}
@@ -691,6 +696,7 @@
     display: block;
     height: 16px;
     background-color: #697a88;
+    cursor:default !important;
     border-radius: 0.3rem;
 
     transition: width 500ms ease-in-out;
@@ -832,6 +838,7 @@
         .traits-container {
           cursor: default;
           user-select: none;
+          margin-bottom: 30px;
         }
       
         span {
