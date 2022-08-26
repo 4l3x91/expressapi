@@ -1,8 +1,5 @@
-### Visit page
-GET http://localhost:3000/
-
 ### Get object by ID
-GET http://localhost:3000/api/cats/id/<id>
+GET http://localhost:3000/api/cats/id/abys
 
 ### Get all objects
 GET http://localhost:3000/api/cats
@@ -16,7 +13,6 @@ Content-Type: application/json
 
   {
     "weight": "3 - 5",
-    "id": "abys",
     "name": "Abyssinian",
     "origin": "Egypt",
     "description": "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
