@@ -30,11 +30,11 @@
 
   function newCat() {
     const cat = {
-      weight: `${weight[0] + 5}-${weight[1] + 5}`,
+      weight: `${weight[0] + 1} - ${weight[1] + 1}`,
       name: breedName,
       origin: breedOrigin,
       description: breedDescription,
-      life_span: `${life_span[0] + 5}-${life_span[1] + 5}`,
+      life_span: `${life_span[0] + 1} - ${life_span[1] + 1}`,
       adaptability: traitsArray[3].value[0] + 1,
       affection_level: traitsArray[5].value[0] + 1,
       energy_level: traitsArray[2].value[0] + 1,
@@ -350,13 +350,13 @@
               <div slot="left">
                 <span>{grabRandomCatMoji()}</span>
                 <div class="slider-text">
-                  {weight[0] + 5}
+                  {weight[0] + 1}
                 </div>
               </div>
               <div slot="right">
                 <span>{grabRandomCatMoji()}</span>
                 <div class="slider-text">
-                  {weight[1] + 5}
+                  {weight[1] + 1}
                 </div>
               </div>
             </Slider>
@@ -379,13 +379,13 @@
               <div slot="left">
                 <span>{grabRandomCatMoji()}</span>
                 <div class="slider-text">
-                  {life_span[0] + 5}
+                  {life_span[0] + 1}
                 </div>
               </div>
               <div slot="right">
                 <span>{grabRandomCatMoji()}</span>
                 <div class="slider-text">
-                  {life_span[1] + 5}
+                  {life_span[1] + 1}
                 </div>
               </div>
             </Slider>
@@ -395,9 +395,7 @@
         <div class="breed-image-container">
           <div class="breed-image-text">
             Image link
-            <div style="font-size: 10px; align-self: center; display: inline;">
-              Leave blank for default image
-            </div>
+            <div class="breed-image-note">Leave blank for default image</div>
           </div>
           <div class="breed-input-container">
             <input
@@ -439,6 +437,11 @@
 
   .breed-image-container {
     padding: 20px 0;
+  }
+  .breed-image-note {
+    font-size: 10px;
+    align-self: center;
+    display: inline;
   }
   form {
     padding: 10px;
@@ -537,6 +540,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    margin-bottom: 30px;
   }
 
   .trait-container {
@@ -553,6 +557,7 @@
   .breed-title {
     font-size: 18px;
   }
+
 
   .traits-container {
     cursor: default;
