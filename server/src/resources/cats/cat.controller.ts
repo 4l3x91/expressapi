@@ -74,7 +74,12 @@ export const editObject = (req: Request, res: Response, next: NextFunction) => {
     const cat = cats.find((x) => x.id === id);
     if (cat) {
       const catIndex = cats.indexOf(cat);
-      cats[catIndex] = {id, ...req.body};
+      let image = req.body.image;
+      if(image.length > 1 || image.includes('png') || image.includes('jpg')) {
+        req.body.image = image;
+      } else req.body.image = `${url}${port}/img/default_cat.png`;
+
+      cats[catIndex] = { id, image, ...req.body};
       res.status(200).json(cats[catIndex]);
       saveToFile(cats);
     } else next();
