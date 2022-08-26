@@ -54,6 +54,11 @@ h1 {
   min-height: 100vh;
   flex-direction: column;
   width: 100%;
+  background-image: url('https://images2.alphacoders.com/125/1258095.jpg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 main {
