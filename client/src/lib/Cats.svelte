@@ -16,7 +16,7 @@
 <div on:click={() => open(AddPopup, {})} class="plus cat-container add-breed">
   <div class="add-breed-text">Add breed</div>
 </div>
-{#each $breedArray as item (item.id)}
+{#each $breedArray.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
 
   {#if $searchInput.length < 1 || item.name
       .toLowerCase()
